@@ -1,0 +1,23 @@
+{
+  "name": "@eed/schedule",
+  "private": true,
+  "scripts": {
+    "build": "nitro build",
+    "dev": "nitro dev",
+    "prepare": "nitro prepare",
+    "preview": "node .output/server/index.mjs",
+    "lint": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.12.1",
+    "crc-32": "^1.2.2",
+    "cron-parser": "^4.9.0",
+    "dotenv": "^16.4.7",
+    "eslint-plugin-perfectionist": "^4.4.0",
+    "ioredis": "^5.4.2",
+    "nitropack": "latest",
+    "node-schedule": "^2.1.1",
+    "p-filter": "^4.1.0",
+    "p-map": "^7.0.3"
+  }
+}
