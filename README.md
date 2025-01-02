@@ -114,7 +114,113 @@ GET /status
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|none|Inline|
+|200|OK|none|Inline|
+
+#### 返回数据结构
+
+### POST 任务添加
+
+POST /add
+
+```typescript
+{
+  /**
+   * 项目名称
+   */
+  name: string;
+  /**
+   *  键值源信息
+   */
+  keys?: string[];
+  /**
+   * 任务唯一键值
+   */
+  key?: string;
+
+  /**
+   * 队列中延迟次数
+   */
+  delayCount?: number;
+  /**
+   * 队列中初次加入时间
+   */
+  queueDate?: Date;
+}
+```
+
+> Body 请求参数
+
+```json
+"{\r\n    \"name\": \"demo1\",\r\n    \"keys\": [ {% mock 'cname' %}]\r\n}"
+```
+
+#### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|body|body|object| 否 |none|
+
+> 返回示例
+
+> 204 Response
+
+#### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|204|No Content|none|Inline|
+
+#### 返回数据结构
+
+### POST 任务取消(完成)
+
+POST /cancel
+
+任务取消(完成)
+```typescript
+{
+  /**
+   * 项目名称
+   */
+  name: string;
+  /**
+   *  键值源信息
+   */
+  keys?: string[];
+  /**
+   * 任务唯一键值
+   */
+  key?: string;
+}
+```
+
+> Body 请求参数
+
+```json
+{
+  "key": "-1111142272",
+  "keys": [
+    "李静"
+  ],
+  "name": "demo"
+}
+```
+
+#### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|body|body|object| 否 |none|
+
+> 返回示例
+
+> 204 Response
+
+#### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|204|No Content|none|Inline|
 
 #### 返回数据结构
 
@@ -234,7 +340,7 @@ POST /project/test
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|none|Inline|
+|200|OK|none|Inline|
 
 #### 返回数据结构
 
@@ -335,112 +441,6 @@ GET /project/restart
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
 |name|query|string| 是 |none|
-
-> 返回示例
-
-> 204 Response
-
-#### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|204|No Content|none|Inline|
-
-#### 返回数据结构
-
-### POST 任务添加
-
-POST /add
-
-```typescript
-{
-  /**
-   * 项目名称
-   */
-  name: string;
-  /**
-   *  键值源信息
-   */
-  keys?: string[];
-  /**
-   * 任务唯一键值
-   */
-  key?: string;
-
-  /**
-   * 队列中延迟次数
-   */
-  delayCount?: number;
-  /**
-   * 队列中初次加入时间
-   */
-  queueDate?: Date;
-}
-```
-
-> Body 请求参数
-
-```json
-"{\r\n    \"name\": \"demo1\",\r\n    \"keys\": [ {% mock 'cname' %}]\r\n}"
-```
-
-#### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|body|body|object| 否 |none|
-
-> 返回示例
-
-> 204 Response
-
-#### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|204|No Content|none|Inline|
-
-#### 返回数据结构
-
-### POST 任务取消(完成)
-
-POST /cancel
-
-任务取消(完成)
-```typescript
-{
-  /**
-   * 项目名称
-   */
-  name: string;
-  /**
-   *  键值源信息
-   */
-  keys?: string[];
-  /**
-   * 任务唯一键值
-   */
-  key?: string;
-}
-```
-
-> Body 请求参数
-
-```json
-{
-  "key": "-1111142272",
-  "keys": [
-    "李静"
-  ],
-  "name": "demo"
-}
-```
-
-#### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|body|body|object| 否 |none|
 
 > 返回示例
 
