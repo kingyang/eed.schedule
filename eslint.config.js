@@ -2,18 +2,14 @@
 // https://github.com/antfu/eslint-flat-config-viewer
 // npx eslint-flat-config-viewer
 const antfu = require('@antfu/eslint-config').default
-const perfectionistNatural = require('eslint-plugin-perfectionist/configs/recommended-natural')
 
-const isDev = process.env.NODE_ENV === 'development'
+const isDev = process.env.NODE_ENV !== 'production'
 const ruleStatus = isDev ? 'warn' : 'off'
 module.exports = antfu(
   {
     ignores: [
-
+      'README.md',
     ],
-  },
-  perfectionistNatural,
-  {
     rules: {
       'import/order': 'off',
       'jsdoc/check-param-name': 'off',

@@ -1,9 +1,9 @@
+import type { Project, Task, TaskInfo, TaskKey } from './types'
+
 import crc32 from 'crc-32'
 import cronParser from 'cron-parser'
 import pFilter from 'p-filter'
 import pMap from 'p-map'
-
-import type { Project, Task, TaskInfo, TaskKey } from './types'
 
 const { schedule: { concurrency: concurrencyDef = 30, prefix } = {} }
   = serverConfig
@@ -118,7 +118,7 @@ const workerHeartbeat = 5 * 1000
 function isLive(time: string): boolean {
   return (
     (time
-    && new Date().getTime() - Number.parseInt(time, 10) <= workerHeartbeat)
+      && new Date().getTime() - Number.parseInt(time, 10) <= workerHeartbeat)
     || false
   )
 }

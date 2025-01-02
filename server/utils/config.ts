@@ -105,16 +105,18 @@ function toBool(defVal: boolean, str?: string): boolean {
 }
 
 const redisConfig: ServerPrivateConfig['redis'] = {
+  enable: toBool(true, process.env.SERVER_REDIS_ENABLE),
   db: (process.env.SERVER_REDIS_DB && Number(process.env.SERVER_REDIS_DB)) || 0,
   host: process.env.SERVER_REDIS_HOST || '',
   password: process.env.SERVER_REDIS_PASSWORD,
   port: toNumber(6379, process.env.SERVER_REDIS_PORT),
   username: process.env.SERVER_REDIS_USERNAME,
 }
+redisConfig.enable = redisConfig.enable && !!redisConfig.host && !!redisConfig.username && !!redisConfig.password
 
 const logConfig: ServerPrivateConfig['log'] = {
-  console: process.env.SERVER_LOG_CONSOLE !== 'false',
-  enable: process.env.SERVER_LOG_ENABLE !== 'false',
+  console: toBool(true, process.env.SERVER_LOG_CONSOLE),
+  enable: toBool(true, process.env.SERVER_LOG_ENABLE),
   persistentNum: toNumber(-500, process.env.SERVER_LOG_PERSISTENTNUM),
   prefix: process.env.SERVER_LOG_PREFIX || '',
   redisDb: toNumber(2, process.env.SERVER_LOG_REDISDB),

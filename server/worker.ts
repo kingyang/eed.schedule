@@ -1,9 +1,7 @@
 import type { Job } from 'node-schedule'
-
-import schedule from 'node-schedule'
-
 import type { TaskInfo, WorkerTaskStatus } from './types'
 
+import schedule from 'node-schedule'
 import { channelName, currentWorkerId, rkTask, rkWorkLive } from './core'
 
 const {
@@ -195,7 +193,7 @@ async function taskStart(key: string, flag: number) {
   if (
     flag === 2
     && (jobStatus.delayTimer
-    || (jobStatus.job && new Date(jobStatus.nextInvocation) >= new Date()))
+      || (jobStatus.job && new Date(jobStatus.nextInvocation) >= new Date()))
   ) {
     // 检测模式 调度任务在延迟阶段或调度时间有效状态
     return

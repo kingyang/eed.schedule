@@ -1,5 +1,5 @@
 import { getStatus } from '~/core'
 
-export default eventHandler((event) => {
+export default eventHandler(() => {
   return getStatus()
 })

@@ -62,7 +62,7 @@ export default function request(config: RequestConfig): Promise<any> {
         try {
           return response.json()
         }
-        catch (error) {
+        catch {
           return response.text()
         }
       }

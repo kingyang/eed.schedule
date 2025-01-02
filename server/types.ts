@@ -1,4 +1,3 @@
-import type { Canceler } from 'axios'
 import type { Job } from 'node-schedule'
 
 export interface TaskKey {
