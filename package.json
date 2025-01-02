@@ -2,7 +2,7 @@
   "name": "@eed/schedule",
   "private": true,
   "scripts": {
-    "build": "nitro build",
+    "build": "cross-env NODE_ENV=production nitro build",
     "dev": "nitro dev",
     "prepare": "nitro prepare",
     "preview": "node .output/server/index.mjs",
@@ -12,6 +12,7 @@
     "@antfu/eslint-config": "^3.12.1",
     "crc-32": "^1.2.2",
     "cron-parser": "^4.9.0",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",
     "eslint-plugin-perfectionist": "^4.4.0",
     "ioredis": "^5.4.2",
