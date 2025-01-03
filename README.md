@@ -1,5 +1,26 @@
-## 项目简介
 @eed/schedule 外部服务仅依赖`redis`的超轻便高弹性资源定时调度系统, 支持集群化部署.
+
+## 目录
+
+- [项目依赖](#项目依赖)
+- [使用场景](#使用场景)
+- [部署流程](#部署流程)
+- [配置说明](#配置说明)
+- [使用流程](#使用流程)
+- [服务接口](#服务接口)
+  - [GET 状态查看](#get-状态查看)
+  - [POST 任务添加](#post-任务添加)
+  - [POST 任务取消(完成)](#post-任务取消完成)
+  - [POST 项目编辑](#post-项目编辑)
+  - [POST 项目测试](#post-项目测试)
+  - [GET 项目移除(清理任务并移除项目)](#get-项目移除清理任务并移除项目)
+  - [GET 项目清理(清理任务)](#get-项目清理清理任务)
+  - [GET 项目暂停](#get-项目暂停)
+  - [GET 项目继续](#get-项目继续)
+  - [GET 项目重启](#get-项目重启)
+  - [POST 保存日志](#post-保存日志)
+  - [POST 测试业务1](#post-测试业务1)
+  - [POST 测试业务2](#post-测试业务2)
 
 ## 项目依赖
 1. nodejs >= 8.0.0
@@ -22,38 +43,7 @@
 3. pnpm build
 4. 部署(如pm2 或 docker 或k8s)
 
-## 使用流程
-在自己的业务系统实现需要定时要处理的业务逻辑接口url, 且该接口能被调度系统访问
-接口url
-
-业务接口要求:
-1. POST
-2. 响应status 为200或204 则认为成功, 其它状态会一直重试
-3. request body为TaskInfo.
-
-长期调度可参照:demoHandler0
-临时调度可参照:demoHandler1
-
-配置流程:
-1. 通过"项目编辑"接口 添加调度`项目`配置
-   若是长期调度,则已经完成; 若是临时调度,则继续下列步骤
-   如
-```json
-{
-  "name": "demo",
-  "cron": "0 0/1 * * * *",
-  "concurrency": 1,
-  "url": "http://localhost:3000/test/demoHandler1"
-}
-   ```
-2. 通过"任务添加"接口 添加调度任务`任务`配置, 可以多次添加后调用 `状态查看`系系统状态.
-```json
-{
-  "name": "demo",
-  "keys": ["{% mock 'cname' %}"]
-}
-```
-3. 查看调度系统(控制台或日志系统)日志及业务日志
+部署配置参见 [配置说明](#配置说明)
 
 ## 配置说明
 ```shell
@@ -96,7 +86,51 @@ SERVER_LOG_SERVERURL=
 
 ```
 
-##  常用接口
+## 使用流程
+在自己的业务系统实现需要定时要处理的业务逻辑接口url, 且该接口能被调度系统访问
+接口url
+
+业务接口要求:
+1. POST
+2. 响应status 为200或204 则认为成功, 其它状态会一直重试
+3. request body为TaskInfo.
+
+长期调度可参照:demoHandler0
+临时调度可参照:demoHandler1
+
+配置流程:
+1. 通过"项目测试"接口 测试配置项中的`cron`是否正确及符合预期
+```json
+{
+  "name": "demo",
+  "cron": "0 0/1 * * * *",
+  "concurrency": 1,
+  "url": "http://localhost:3000/test/demoHandler1"
+}
+```
+2. 通过"项目编辑"接口 添加调度`项目`配置
+   若是长期调度,则已经完成; 若是临时调度,则继续下列步骤
+   如
+```json
+{
+  "name": "demo",
+  "cron": "0 0/1 * * * *",
+  "concurrency": 1,
+  "url": "http://localhost:3000/test/demoHandler1"
+}
+   ```
+3. 通过"任务添加"接口 添加调度任务`任务`配置, 可以多次添加后调用 `状态查看`系系统状态.
+```json
+{
+  "name": "demo",
+  "keys": ["{% mock 'cname' %}"]
+}
+```
+4. 查看调度系统(控制台或日志系统)日志及业务日志
+
+
+
+##  服务接口
 
 ### GET 状态查看
 
@@ -151,7 +185,12 @@ POST /add
 > Body 请求参数
 
 ```json
-"{\r\n    \"name\": \"demo1\",\r\n    \"keys\": [ {% mock 'cname' %}]\r\n}"
+{
+  "keys": [
+    "李静"
+  ],
+  "name": "demo"
+}
 ```
 
 #### 请求参数
@@ -344,7 +383,7 @@ POST /project/test
 
 #### 返回数据结构
 
-### GET 项目移除(清理任务,移除项目)
+### GET 项目移除(清理任务并移除项目)
 
 GET /project/remove
 
@@ -487,7 +526,10 @@ POST /log/persistent
 > Body 请求参数
 
 ```json
-"{\r\n    \"name\": \"demo1\",\r\n    \"keys\": [ {% mock 'cname' %}]\r\n}"
+{
+  "name": "demo",
+  "keys": ["{% mock 'cname' %}"]
+}
 ```
 
 #### 请求参数
